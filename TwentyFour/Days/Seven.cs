@@ -86,7 +86,7 @@ internal class Seven
 
             for (int j = 0; j < operatorCount; j++)
             {
-                if ((i >> j & 1) == 0)
+                if ((i / (int)Math.Pow(2, j)) % 2 == 0)
                 {
                     ops[j] = CalculationOperators.Add;
                 }
