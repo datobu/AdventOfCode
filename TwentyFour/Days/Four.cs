@@ -170,7 +170,6 @@ internal class Four
 
         while (lineNumber < lines.Length)
         {
-            // Konvertiere die aktuelle Zeile in ein Zeichenarray
             char[] charArray = lines[lineNumber].ToCharArray();
 
             for (int col = 0; col < charArray.Length; col++)
