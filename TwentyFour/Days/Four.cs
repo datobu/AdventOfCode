@@ -41,67 +41,29 @@ internal class Four
                 (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) = 
                     GetPossibleDirections(line,col);
 
-                if (possibleHorizontalDirections.Contains(HorizontalDirection.Left))
+                // simplified with chatgpt:
+                var directions = 
+                    new (int rowStep, int colStep, HorizontalDirection? horizontalDirection, VerticalDirection? verticalDirection)[]
                 {
-                    if (CheckDirection(line, col - 1, 'M', 0, -1))
-                    {
-                        counter++;
-                    }
+                    (0, -1, HorizontalDirection.Left, null),  // Left
+                    (0, 1, HorizontalDirection.Right, null),  // Right
+                    (-1, 0, null, VerticalDirection.Up),     // Up
+                    (1, 0, null, VerticalDirection.Down),    // Down
+                    (-1, -1, HorizontalDirection.Left, VerticalDirection.Up),   // Left-Up
+                    (1, -1, HorizontalDirection.Left, VerticalDirection.Down),  // Left-Down
+                    (-1, 1, HorizontalDirection.Right, VerticalDirection.Up),  // Right-Up
+                    (1, 1, HorizontalDirection.Right, VerticalDirection.Down)  // Right-Down
+                };
 
-                    if (possibleVerticalDirections.Contains(VerticalDirection.Up))
+                foreach (var (rowStep, colStep, horDir, verDir) in directions)
+                {
+                    if ((horDir == null || possibleHorizontalDirections.Contains(horDir.Value)) &&
+                        (verDir == null || possibleVerticalDirections.Contains(verDir.Value)))
                     {
-                        if (CheckDirection(line - 1, col - 1, 'M', -1, -1))
+                        if (CheckDirection(line + rowStep, col + colStep, 'M', rowStep, colStep))
                         {
                             counter++;
                         }
-                    }
-
-                    if (possibleVerticalDirections.Contains(VerticalDirection.Down))
-                    {
-                        if (CheckDirection(line + 1, col - 1, 'M', 1, -1))
-                        {
-                            counter++;
-                        }
-                    }
-                }
-
-                if (possibleHorizontalDirections.Contains(HorizontalDirection.Right))
-                {
-                    if (CheckDirection(line, col + 1, 'M', 0, 1))
-                    {
-                        counter++;
-                    }
-
-                    if (possibleVerticalDirections.Contains(VerticalDirection.Up))
-                    {
-                        if (CheckDirection(line - 1, col + 1, 'M', -1, 1))
-                        {
-                            counter++;
-                        }
-                    }
-
-                    if (possibleVerticalDirections.Contains(VerticalDirection.Down))
-                    {
-                        if (CheckDirection(line + 1, col + 1, 'M', 1, 1))
-                        {
-                            counter++;
-                        }
-                    }
-                }
-
-                if (possibleVerticalDirections.Contains(VerticalDirection.Up))
-                {
-                    if (CheckDirection(line - 1, col, 'M', -1, 0))
-                    {
-                        counter++;
-                    }
-                }
-
-                if (possibleVerticalDirections.Contains(VerticalDirection.Down))
-                {
-                    if (CheckDirection(line + 1, col, 'M', 1, 0))
-                    {
-                        counter++;
                     }
                 }
             }
