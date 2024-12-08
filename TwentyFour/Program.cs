@@ -3,5 +3,6 @@
 //var day = new Seven();
 
 //int result = day.Run();
+One.Run();
 
-Console.WriteLine(Seven.Run());
+Console.WriteLine();
