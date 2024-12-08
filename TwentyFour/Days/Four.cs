@@ -12,10 +12,13 @@ internal class Four
 
     internal int Run()
     {
-        return PartOne();
-    }
+        string[] lines = InitMatrix();
 
-    private int PartOne()
+        FillMatrix(lines);
+
+        return PartTwo();
+    }
+    private string[] InitMatrix()
     {
         string[] lines = File.ReadAllLines("../../../Common/Inputs/DayFour.txt");
 
@@ -23,15 +26,10 @@ internal class Four
         _numberOfColumns = lines[0].Length;
 
         _matrix = new char[_numberOfLines, _numberOfColumns];
-
-        FillMatrix(lines);
-
-        Count();
-
-        return _counter;
+        return lines;
     }
 
-    private void Count()
+    private int PartOne()
     {
         for (int line = 0; line < _numberOfLines; line++)
         {
@@ -74,6 +72,34 @@ internal class Four
                 }
             }
         }
+
+        return _counter;
+    }
+
+    private int PartTwo()
+    {
+        for (int line = 1; line < _numberOfLines - 1; line++)
+        {
+            for (int col = 1; col < _numberOfColumns - 1; col++)
+            {
+                if (_matrix[line, col] != 'A')
+                {
+                    continue;
+                }
+
+                if (_matrix[line - 1, col - 1] == 'M' && _matrix[line + 1, col + 1] == 'S' ||
+                    _matrix[line - 1, col - 1] == 'S' && _matrix[line + 1, col + 1] == 'M')
+                {
+                    if (_matrix[line - 1, col + 1] == 'M' && _matrix[line + 1, col - 1] == 'S' ||
+                    _matrix[line - 1, col + 1] == 'S' && _matrix[line + 1, col - 1] == 'M')
+                    {
+                        _counter++;
+                    }
+                }
+            }
+        }
+
+        return _counter;
     }
 
     private bool CheckDirection(int line, int col, char character, int lineStep, int colStep)
