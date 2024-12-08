@@ -1,7 +1,7 @@
 ﻿using TwentyFour.Days;
 
-var day = new Six();
+//var day = new Seven();
 
-int result = day.Run();
+//int result = day.Run();
 
-Console.WriteLine(result);
+Console.WriteLine(Seven.Run());

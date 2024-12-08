@@ -39,5 +39,4 @@ internal static class One
 
         Console.WriteLine(sum);
     }
-
 }
