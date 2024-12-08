@@ -5,14 +5,15 @@ internal class Four
     public enum HorizontalDirection { Left, Right }
     public enum VerticalDirection { Up, Down }
 
+    private int _numberOfLines = 0;
+    private int _numberOfColumns = 0;
+    private char[,] _matrix = null!;
+    private int _counter = 0;
+
     internal int Run()
     {
         return PartOne();
     }
-
-    private int _numberOfLines = 0;
-    private int _numberOfColumns = 0;
-    private char[,] _matrix = null!;
 
     private int PartOne()
     {
@@ -25,8 +26,13 @@ internal class Four
 
         FillMatrix(lines);
 
-        int counter = 0;
+        Count();
 
+        return _counter;
+    }
+
+    private void Count()
+    {
         for (int line = 0; line < _numberOfLines; line++)
         {
             for (int col = 0; col < _numberOfColumns; col++)
@@ -38,11 +44,11 @@ internal class Four
                     continue;
                 }
 
-                (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) = 
-                    GetPossibleDirections(line,col);
+                (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) =
+                    GetPossibleDirections(line, col);
 
                 // simplified with chatgpt:
-                var directions = 
+                var directions =
                     new (int rowStep, int colStep, HorizontalDirection? horizontalDirection, VerticalDirection? verticalDirection)[]
                 {
                     (0, -1, HorizontalDirection.Left, null),  // Left
@@ -62,14 +68,12 @@ internal class Four
                     {
                         if (CheckDirection(line + rowStep, col + colStep, 'M', rowStep, colStep))
                         {
-                            counter++;
+                            _counter++;
                         }
                     }
                 }
             }
         }
-
-        return counter;
     }
 
     private bool CheckDirection(int line, int col, char character, int lineStep, int colStep)
@@ -94,7 +98,9 @@ internal class Four
         return true;
     }
 
-    private (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) GetPossibleDirections(int lineNumber, int colNumber)
+    private (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) GetPossibleDirections(
+        int lineNumber, 
+        int colNumber)
     {
         List<HorizontalDirection> horizontalDirections = new List<HorizontalDirection>();
         List<VerticalDirection> verticalDirections = new List<VerticalDirection>();
