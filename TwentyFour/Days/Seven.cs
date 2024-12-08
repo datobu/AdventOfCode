@@ -33,7 +33,7 @@ internal class Seven
 
             while (!resultFound && z < operatorList.Count)
             {
-                long tempResult = 0;
+                long tempResult = calculationParts[0];
 
                 CalculationOperators[] operatorSelection = operatorList[z];
 
@@ -41,26 +41,11 @@ internal class Seven
                 {
                     if (operatorSelection[i] == CalculationOperators.Add)
                     {
-                        if (i == 0)
-                        {
-                            tempResult += calculationParts[i] + calculationParts[i + 1];
-                        }
-                        else
-                        {
-                            tempResult += calculationParts[i + 1];
-                        }
-
+                        tempResult += calculationParts[i + 1];
                     }
                     else
                     {
-                        if (i == 0)
-                        {
-                            tempResult += calculationParts[i] * calculationParts[i + 1];
-                        }
-                        else
-                        {
-                            tempResult *= calculationParts[i + 1];
-                        }
+                        tempResult *= calculationParts[i + 1];
                     }
                 }
 
