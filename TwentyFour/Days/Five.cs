@@ -7,13 +7,14 @@ internal class Five
 
     public int Run()
     {
-        return PartOne();
+        Init();
+
+        return PartTwo();
+        // return PartOne();
     }
 
     private int PartOne()
     {
-        Init();
-
         int sum = 0;
 
         foreach (var page in _pages)
@@ -25,6 +26,59 @@ internal class Five
         }
 
         return sum;
+    }
+
+    private int PartTwo()
+    {
+        int sum = 0;
+
+        foreach (var page in _pages)
+        {
+            if (!FixIfInvalid(page))
+            {
+                sum += page[Convert.ToInt32((Math.Floor(page.Count / 2.0)))];
+            }
+        }
+
+        return sum;
+    }
+
+    private bool FixIfInvalid(List<int> page)
+    {
+        bool wasValid = true;
+        
+        bool unchanged = true;
+
+        int i = 0;
+
+        while (i < page.Count)
+        {
+            int pageNumberEarly = page[i];
+
+            unchanged = true;
+
+            for (int j = i + 1; j < page.Count; j++)
+            {
+                int pageNumberLate = page[j];
+                if (_rules.Any(x => x.Item1 == pageNumberLate && x.Item2 == pageNumberEarly))
+                {
+                    int temp = page[i];
+
+                    page[i] = page[j];
+                    page[j] = temp;
+
+                    wasValid = false;
+                    unchanged = false;
+                }
+            }
+
+            if (unchanged)
+            {
+                i++;
+            }
+        }
+
+        return wasValid;
     }
 
     private bool IsValid(List<int> page)
