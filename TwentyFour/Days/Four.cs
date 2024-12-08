@@ -110,8 +110,6 @@ internal class Four
         return counter;
     }
 
-
-    //Method found with ChatGpt to avoid code repitition. You can see my approach without ChatGpt below, in the commented 3 methods.
     private bool CheckDirection(int line, int col, char character, int lineStep, int colStep)
     {
         if (_matrix[line, col] != character)
@@ -133,63 +131,6 @@ internal class Four
 
         return true;
     }
-
-    /*private bool CheckLeftDown(int line, int col, char c)
-    {
-        if (_matrix[line, col] != c)
-        {
-            return false;
-        }
-
-        if (c == 'M')
-        {
-            return CheckLeftDown(line + 1, col - 1, 'A');
-        }
-        else if (c == 'A')
-        {
-            return CheckLeftDown(line + 1, col - 1, 'S');
-        }
-
-        return true;
-    }
-
-    private bool CheckLeftUp(int line, int col, char c)
-    {
-        if (_matrix[line, col] != c)
-        {
-            return false;
-        }
-
-        if (c == 'M')
-        {
-            return CheckLeftUp(line - 1, col - 1, 'A');
-        }
-        else if (c == 'A')
-        {
-            return CheckLeftUp(line - 1, col - 1, 'S');
-        }
-
-        return true;
-    }
-
-    private bool CheckLeft(int line, int col, char c)
-    {
-        if (_matrix[line, col] != c)
-        {
-            return false;
-        }
-
-        if (c == 'M')
-        {
-            return CheckLeft(line, col - 1, 'A');
-        }
-        else if (c == 'A')
-        {
-            return CheckLeft(line, col - 1, 'S');
-        }
-
-        return true;
-    }*/
 
     private (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) GetPossibleDirections(int lineNumber, int colNumber)
     {
