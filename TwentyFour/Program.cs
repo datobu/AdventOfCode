@@ -1,6 +1,6 @@
 ﻿using TwentyFour.Days;
 
-var day = new Five();
+var day = new Six();
 
 int result = day.Run();
 
