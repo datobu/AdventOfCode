@@ -29,7 +29,9 @@ internal class Four
         return lines;
     }
 
+#pragma warning disable IDE0051 // Remove unused private members
     private int PartOne()
+#pragma warning restore IDE0051 // Remove unused private members
     {
         for (int line = 0; line < _numberOfLines; line++)
         {
@@ -113,7 +115,7 @@ internal class Four
         {
             'M' => 'A',
             'A' => 'S',
-            _ => '\0' 
+            _ => '\0'
         };
 
         if (nextChar != '\0')
@@ -125,11 +127,11 @@ internal class Four
     }
 
     private (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) GetPossibleDirections(
-        int lineNumber, 
+        int lineNumber,
         int colNumber)
     {
-        List<HorizontalDirection> horizontalDirections = new List<HorizontalDirection>();
-        List<VerticalDirection> verticalDirections = new List<VerticalDirection>();
+        List<HorizontalDirection> horizontalDirections = [];
+        List<VerticalDirection> verticalDirections = [];
 
         foreach (HorizontalDirection horDir in Enum.GetValues(typeof(HorizontalDirection)))
         {

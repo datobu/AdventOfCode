@@ -13,7 +13,9 @@ internal class Five
         // return PartOne();
     }
 
+#pragma warning disable IDE0051 // Remove unused private members
     private int PartOne()
+#pragma warning restore IDE0051 // Remove unused private members
     {
         int sum = 0;
 
@@ -46,7 +48,6 @@ internal class Five
     private bool FixIfInvalid(List<int> page)
     {
         bool wasValid = true;
-        
         bool unchanged = true;
 
         int i = 0;
@@ -62,11 +63,7 @@ internal class Five
                 int pageNumberLate = page[j];
                 if (_rules.Any(x => x.Item1 == pageNumberLate && x.Item2 == pageNumberEarly))
                 {
-                    int temp = page[i];
-
-                    page[i] = page[j];
-                    page[j] = temp;
-
+                    (page[j], page[i]) = (page[i], page[j]);
                     wasValid = false;
                     unchanged = false;
                 }
@@ -115,7 +112,7 @@ internal class Five
                     rulePart = false;
                     continue;
                 }
-                
+
                 AddRule(line);
                 continue;
             }

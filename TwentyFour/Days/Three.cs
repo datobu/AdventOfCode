@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Advent2024;
+namespace TwentyFour.Days;
 internal static class Three
 {
     public static void Run()
@@ -23,7 +23,7 @@ internal static class Three
             foreach (Match match in matches)
             {
                 // cut the first 4 characters off the match
-                var substr = match.Value.Substring(4);
+                var substr = match.Value[4..];
 
                 // split the substring by the comma
                 var split = substr.Split(',');
@@ -66,12 +66,12 @@ internal static class Three
                 else if (enabled)
                 {
                     // cut the first 4 characters off the match
-                    var substr = match.Value.Substring(4);
+                    var substr = match.Value[4..];
 
                     // split the substring by the comma
                     var split = substr.Split(',');
                     int first = int.Parse(split[0]);
-                    
+
                     // remove the last character of split[1]
                     int second = int.Parse(split[1].Remove(split[1].Length - 1));
                     sum += first * second;

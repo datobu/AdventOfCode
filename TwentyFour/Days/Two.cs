@@ -1,6 +1,4 @@
-﻿
-
-namespace Advent2024;
+﻿namespace TwentyFour.Days;
 
 internal static class Two
 {
@@ -10,7 +8,9 @@ internal static class Two
         PartTwo();
     }
 
+#pragma warning disable IDE0051 // Remove unused private members
     private static void PartOne()
+#pragma warning restore IDE0051 // Remove unused private members
     {
         var input = File.ReadAllLines("../../../Common/Inputs/DayTwo.txt");
 
@@ -24,7 +24,7 @@ internal static class Two
 
             bool valid = true;
 
-            for (int i = 0; i < numbers.Count() - 1; i++)
+            for (int i = 0; i < numbers.Length - 1; i++)
             {
                 if (numbers[i] == numbers[i + 1])
                 {
@@ -85,7 +85,7 @@ internal static class Two
 
     private static bool IsValid(List<int> numbers)
     {
-        for (int i = -1; i < numbers.Count(); i++)
+        for (int i = -1; i < numbers.Count; i++)
         {
             var copy = 0;
             if (i != -1)
@@ -108,7 +108,7 @@ internal static class Two
 
     private static bool IsValidDescending(List<int> copy)
     {
-        for (int i = 0; i < copy.Count() - 1; i++)
+        for (int i = 0; i < copy.Count - 1; i++)
         {
             if (copy[i] == copy[i + 1] || copy[i] - copy[i + 1] > 3 || copy[i] - copy[i + 1] < 0)
             {
@@ -121,7 +121,7 @@ internal static class Two
 
     private static bool IsValidAscending(List<int> copy)
     {
-        for (int i = 0; i < copy.Count() - 1; i++)
+        for (int i = 0; i < copy.Count - 1; i++)
         {
             if (copy[i] == copy[i + 1] || copy[i + 1] - copy[i] > 3 || copy[i + 1] - copy[i] < 0)
             {

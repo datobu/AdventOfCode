@@ -1,12 +1,12 @@
-﻿namespace Advent2024;
+﻿namespace TwentyFour.Days;
 internal static class One
 {
     public static void Run()
     {
         var input = File.ReadAllLines("../../../Common/Inputs/DayOne.txt");
 
-        List<int> leftNumbers = new List<int>();
-        List<int> rightNumbers = new List<int>();
+        List<int> leftNumbers = [];
+        List<int> rightNumbers = [];
 
         foreach (var line in input)
         {
@@ -31,7 +31,7 @@ internal static class One
 
             if (distance < 0)
             {
-                distance = distance * -1;
+                distance *= -1;
             }
 
             sum += distance;

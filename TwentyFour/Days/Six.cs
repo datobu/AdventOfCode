@@ -14,9 +14,9 @@ internal class Six
         string[] rows = InitMatrix();
 
         FillMatrix(rows);
-        
+
         _wayMatrix = (char[,])_matrix.Clone();
-       
+
         // PrintMatrix(_wayMatrix);
 
         (int row, int col) = GetStartingPosition();
@@ -45,19 +45,19 @@ internal class Six
         int original_row = row;
         int original_col = col;
 
-        switch (direction) 
+        switch (direction)
         {
             case Direction.Left:
-                col = col - 1;
+                col--;
                 break;
             case Direction.Right:
-                col = col + 1;
+                col++;
                 break;
             case Direction.Up:
-                row = row - 1;
+                row--;
                 break;
             case Direction.Down:
-                row = row + 1;
+                row++;
                 break;
         }
 
@@ -108,7 +108,7 @@ internal class Six
 
         for (int row = 0; row < _numberOfRows; row++)
         {
-            for (int col = 0; col < _numberOfColumns; col++) 
+            for (int col = 0; col < _numberOfColumns; col++)
             {
                 if (_wayMatrix[row, col] == 'X')
                 {
@@ -129,7 +129,7 @@ internal class Six
 
         _matrix = new char[_numberOfRows, _numberOfColumns];
         //_wayMatrix = new char[_numberOfRows, _numberOfColumns];
-        
+
         return rows;
     }
 
