@@ -1,4 +1,7 @@
 ﻿using TwentyFour.Days;
 
+var dayFour = new Four();
 
-Four.Run();
+int result = dayFour.Run();
+
+Console.WriteLine(result);
