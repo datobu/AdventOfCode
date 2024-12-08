@@ -1,10 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TwentyFour.Days;
 
-namespace TwentyFour.Days;
 internal class Five
 {
+    private readonly List<Tuple<int, int>> _rules = [];
+    private readonly List<List<int>> _pages = [];
+
+    public int Run()
+    {
+        return PartOne();
+    }
+
+    private int PartOne()
+    {
+        Init();
+
+        int sum = 0;
+
+        foreach (var page in _pages)
+        {
+            if (IsValid(page))
+            {
+                sum += page[Convert.ToInt32((Math.Floor(page.Count / 2.0)))];
+            }
+        }
+
+        return sum;
+    }
+
+    private bool IsValid(List<int> page)
+    {
+        for (int i = 0; i < page.Count; i++)
+        {
+            int pageNumberEarly = page[i];
+
+            for (int j = i + 1; j < page.Count; j++)
+            {
+                int pageNumberLate = page[j];
+                if (_rules.Any(x => x.Item1 == pageNumberLate && x.Item2 == pageNumberEarly))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void Init()
+    {
+        string[] lines = File.ReadAllLines("../../../Common/Inputs/DayFive.txt");
+
+        bool rulePart = true;
+
+        foreach (string line in lines)
+        {
+            if (rulePart)
+            {
+                if (line == string.Empty)
+                {
+                    rulePart = false;
+                    continue;
+                }
+                
+                AddRule(line);
+                continue;
+            }
+
+            _pages.Add(line.Split(',').Select(x => int.Parse(x)).ToList());
+        }
+    }
+
+    private void AddRule(string line)
+    {
+        var numbers = line.Split('|');
+        _rules.Add(new Tuple<int, int>(int.Parse(numbers[0]), int.Parse(numbers[1])));
+    }
 }
