@@ -8,13 +8,10 @@ internal class Program
     {
         _ = args;
 
-        // Create an instance of your day-specific class
-        var day = new NinePartTwo();
+        var day = new Eight();
 
-        // Run the method and get the result
         long result = day.Run();
 
-        // Output the result to the console
         Console.WriteLine(result);
     }
 }
