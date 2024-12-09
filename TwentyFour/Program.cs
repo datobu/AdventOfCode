@@ -1,8 +1,8 @@
 ﻿using TwentyFour.Days;
 
-//var day = new Seven();
+var day = new Nine();
 
-//int result = day.Run();
-One.Run();
+long result = day.Run();
+//One.Run();
 
-Console.WriteLine();
+Console.WriteLine(result);
