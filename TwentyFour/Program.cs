@@ -8,9 +8,9 @@ internal class Program
     {
         _ = args;
 
-        var day = new Eight();
+        // var day = new Seven();
 
-        long result = day.Run();
+        long result = Seven.Run();
 
         Console.WriteLine(result);
     }
