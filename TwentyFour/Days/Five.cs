@@ -10,6 +10,7 @@ internal class Five
         Init();
 
         return PartTwo();
+
         // return PartOne();
     }
 
@@ -23,7 +24,7 @@ internal class Five
         {
             if (IsValid(page))
             {
-                sum += page[Convert.ToInt32((Math.Floor(page.Count / 2.0)))];
+                sum += page[Convert.ToInt32(Math.Floor(page.Count / 2.0))];
             }
         }
 
@@ -38,7 +39,7 @@ internal class Five
         {
             if (!FixIfInvalid(page))
             {
-                sum += page[Convert.ToInt32((Math.Floor(page.Count / 2.0)))];
+                sum += page[Convert.ToInt32(Math.Floor(page.Count / 2.0))];
             }
         }
 

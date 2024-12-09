@@ -2,7 +2,11 @@
 
 internal class Seven
 {
-    private enum CalculationOperators { Add, Multiply };
+    private enum CalculationOperators
+    {
+        Add,
+        Multiply
+    }
 
     public static long Run()
     {
@@ -22,7 +26,7 @@ internal class Seven
         foreach (var line in lines)
         {
             var lineParts = line.Split(':');
-            long result = Int64.Parse(lineParts[0]);
+            long result = long.Parse(lineParts[0]);
 
             List<int> calculationParts = lineParts[1][1..].Split(' ').Select(x => int.Parse(x)).ToList();
 
@@ -54,6 +58,7 @@ internal class Seven
                     sum += tempResult;
                     resultFound = true;
                 }
+
                 z++;
             }
         }

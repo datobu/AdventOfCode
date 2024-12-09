@@ -5,7 +5,7 @@ internal static class Three
 {
     public static void Run()
     {
-        //TaskOne();
+        // TaskOne();
         TaskTwo();
     }
 

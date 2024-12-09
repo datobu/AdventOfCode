@@ -2,8 +2,17 @@
 
 internal class Four
 {
-    public enum HorizontalDirection { Left, Right }
-    public enum VerticalDirection { Up, Down }
+    public enum HorizontalDirection
+    {
+        Left,
+        Right
+    }
+
+    public enum VerticalDirection
+    {
+        Up,
+        Down
+    }
 
     private int _numberOfLines = 0;
     private int _numberOfColumns = 0;
@@ -18,6 +27,7 @@ internal class Four
 
         return PartTwo();
     }
+
     private string[] InitMatrix()
     {
         string[] lines = File.ReadAllLines("../../../Common/Inputs/DayFour.txt");
@@ -49,7 +59,7 @@ internal class Four
 
                 // simplified with chatgpt:
                 var directions =
-                    new (int rowStep, int colStep, HorizontalDirection? horizontalDirection, VerticalDirection? verticalDirection)[]
+                    new (int RowStep, int ColStep, HorizontalDirection? HorizontalDirection, VerticalDirection? VerticalDirection)[]
                 {
                     (0, -1, HorizontalDirection.Left, null),  // Left
                     (0, 1, HorizontalDirection.Right, null),  // Right
@@ -58,7 +68,7 @@ internal class Four
                     (-1, -1, HorizontalDirection.Left, VerticalDirection.Up),   // Left-Up
                     (1, -1, HorizontalDirection.Left, VerticalDirection.Down),  // Left-Down
                     (-1, 1, HorizontalDirection.Right, VerticalDirection.Up),  // Right-Up
-                    (1, 1, HorizontalDirection.Right, VerticalDirection.Down)  // Right-Down
+                    (1, 1, HorizontalDirection.Right, VerticalDirection.Down) // Right-Down
                 };
 
                 foreach (var (rowStep, colStep, horDir, verDir) in directions)
@@ -89,11 +99,11 @@ internal class Four
                     continue;
                 }
 
-                if (_matrix[line - 1, col - 1] == 'M' && _matrix[line + 1, col + 1] == 'S' ||
-                    _matrix[line - 1, col - 1] == 'S' && _matrix[line + 1, col + 1] == 'M')
+                if ((_matrix[line - 1, col - 1] == 'M' && _matrix[line + 1, col + 1] == 'S') ||
+                    (_matrix[line - 1, col - 1] == 'S' && _matrix[line + 1, col + 1] == 'M'))
                 {
-                    if (_matrix[line - 1, col + 1] == 'M' && _matrix[line + 1, col - 1] == 'S' ||
-                    _matrix[line - 1, col + 1] == 'S' && _matrix[line + 1, col - 1] == 'M')
+                    if ((_matrix[line - 1, col + 1] == 'M' && _matrix[line + 1, col - 1] == 'S') ||
+                    (_matrix[line - 1, col + 1] == 'S' && _matrix[line + 1, col - 1] == 'M'))
                     {
                         _counter++;
                     }
@@ -126,7 +136,7 @@ internal class Four
         return true;
     }
 
-    private (List<HorizontalDirection> possibleHorizontalDirections, List<VerticalDirection> possibleVerticalDirections) GetPossibleDirections(
+    private (List<HorizontalDirection> PossibleHorizontalDirections, List<VerticalDirection> PossibleVerticalDirections) GetPossibleDirections(
         int lineNumber,
         int colNumber)
     {

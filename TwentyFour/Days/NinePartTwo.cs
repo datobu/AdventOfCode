@@ -78,6 +78,7 @@ internal class NinePartTwo
                         _memory.Insert(newIndex + 1, new Tuple<int, string, bool>(_memory[newIndex].Item1 - fileSize, ".", false));
                         oldIndex++;
                     }
+
                     // Move item to new index
                     _memory[newIndex] = new Tuple<int, string, bool>(fileSize, fileId, true);
 

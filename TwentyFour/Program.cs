@@ -1,8 +1,20 @@
 ﻿using TwentyFour.Days;
 
-var day = new NinePartTwo();
+namespace TwentyFour;
 
-long result = day.Run();
-//One.Run();
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        _ = args;
 
-Console.WriteLine(result);
+        // Create an instance of your day-specific class
+        var day = new NinePartTwo();
+
+        // Run the method and get the result
+        long result = day.Run();
+
+        // Output the result to the console
+        Console.WriteLine(result);
+    }
+}

@@ -10,13 +10,6 @@ internal class Nine
         return PartTwo();
     }
 
-    private long PartTwo()
-    {
-        Init();
-
-        return 0;
-    }
-
     public long PartOne()
     {
         Init();
@@ -28,6 +21,13 @@ internal class Nine
         PrintMemory();
 
         return GetChecksum();
+    }
+
+    private long PartTwo()
+    {
+        Init();
+
+        return 0;
     }
 
     private long GetChecksum()
@@ -60,7 +60,6 @@ internal class Nine
                     _memory[i] = _memory[lastFilePartPosition];
                     _memory[lastFilePartPosition] = ".";
                 }
-
             }
         }
     }
@@ -73,6 +72,7 @@ internal class Nine
             {
                 return true;
             }
+
             i++;
         }
 

@@ -1,9 +1,15 @@
 ﻿namespace TwentyFour.Days;
 
-public enum Direction { Right, Left, Up, Down }
-
 internal class Six
 {
+    public enum Direction
+    {
+        Right,
+        Left,
+        Up,
+        Down
+    }
+
     private int _numberOfRows = 0;
     private int _numberOfColumns = 0;
     private char[,] _matrix = null!;
@@ -36,6 +42,7 @@ internal class Six
             {
                 Console.Write(wayMatrix[row, col]);
             }
+
             Console.WriteLine();
         }
     }
@@ -86,7 +93,7 @@ internal class Six
         }
     }
 
-    private (int x, int y) GetStartingPosition()
+    private (int X, int Y) GetStartingPosition()
     {
         for (int row = 0; row < _numberOfRows; row++)
         {
@@ -128,7 +135,8 @@ internal class Six
         _numberOfColumns = rows[0].Length;
 
         _matrix = new char[_numberOfRows, _numberOfColumns];
-        //_wayMatrix = new char[_numberOfRows, _numberOfColumns];
+
+        // _wayMatrix = new char[_numberOfRows, _numberOfColumns];
 
         return rows;
     }

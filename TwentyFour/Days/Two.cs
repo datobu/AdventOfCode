@@ -4,7 +4,7 @@ internal static class Two
 {
     public static void Run()
     {
-        //PartOne();
+        // PartOne();
         PartTwo();
     }
 
@@ -55,6 +55,7 @@ internal static class Two
                     break;
                 }
             }
+
             if (valid)
             {
                 validCount++;
@@ -93,10 +94,12 @@ internal static class Two
                 copy = numbers[i];
                 numbers.RemoveAt(i);
             }
+
             if (IsValidAscending(numbers) || IsValidDescending(numbers))
             {
                 return true;
             }
+
             if (i != -1)
             {
                 numbers.Insert(i, copy);
