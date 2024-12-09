@@ -11,11 +11,11 @@ internal class Eight
         return PartOne();
     }
 
-    private int _count = 0;
+    private readonly int _count = 0;
 
     public int PartOne()
     {
-        var input = File.ReadAllLines("../../../Common/Inputs/DayEight.txt");
+        // var input = File.ReadAllLines("../../../Common/Inputs/DayEight.txt");
 
         // Create Matrix
 

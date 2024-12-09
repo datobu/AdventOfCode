@@ -1,6 +1,6 @@
 ﻿using TwentyFour.Days;
 
-var day = new Nine();
+var day = new NinePartTwo();
 
 long result = day.Run();
 //One.Run();

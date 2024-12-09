@@ -7,10 +7,17 @@ internal class Nine
 
     public long Run()
     {
-        return PartOne();
+        return PartTwo();
     }
 
-    private long PartOne()
+    private long PartTwo()
+    {
+        Init();
+
+        return 0;
+    }
+
+    public long PartOne()
     {
         Init();
 
@@ -18,7 +25,7 @@ internal class Nine
 
         OrderMemory();
 
-        //PrintMemory();
+        PrintMemory();
 
         return GetChecksum();
     }
