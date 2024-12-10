@@ -144,7 +144,7 @@ internal class Ten
 
     private void CountTrailheads(Coordinate start, Coordinate current, int nextStep)
     {
-        Coordinate next = new Coordinate(current.Row + 1, current.Column);
+        Coordinate next = new(current.Row + 1, current.Column);
 
         if (next.Row < _numberOfRows && next.Row >= 0)
         {

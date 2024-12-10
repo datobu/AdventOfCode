@@ -136,13 +136,13 @@ internal class Eight
         _solutionMatrix = (char[,])_matrix.Clone();
     }
 
-    private void PrintMatrix(char[,] solutionMatrix)
+    private void PrintMatrix(char[,] matrix)
     {
         for (int row = 0; row < _numberOfRows; row++)
         {
             for (int col = 0; col < _numberOfColumns; col++)
             {
-                Console.Write(_solutionMatrix[row, col]);
+                Console.Write(matrix[row, col]);
             }
 
             Console.WriteLine();
