@@ -18,7 +18,7 @@ internal class Ten
     {
         public Coordinate OwnPlace { get; set; } = ownPlace;
 
-        public List<Coordinate> StartPoints { get; private set; } = [];
+        public List<Coordinate> EndPoints { get; private set; } = [];
     }
 
     public int Run()
@@ -57,7 +57,9 @@ internal class Ten
             {
                 if (_matrix[row, col] == 0)
                 {
-                    CountTrailheads(new Coordinate(row, col), new Coordinate(row, col), 1);
+                    var trailhead = new Trailhead(new Coordinate(row, col));
+                    _trailheads.Add(trailhead);
+                    CountTrailends(new Coordinate(row, col), 1, trailhead);
                 }
             }
         }
@@ -66,10 +68,78 @@ internal class Ten
 
         foreach (var trailhead in _trailheads)
         {
-            sum += trailhead.StartPoints.Count;
+            sum += trailhead.EndPoints.Count;
         }
 
         return sum;
+    }
+
+    private void CountTrailends(Coordinate current, int nextStep, Trailhead trailhead)
+    {
+        if (nextStep == -1)
+        {
+            return;
+        }
+
+        if (current.Row - 1 >= 0)
+        {
+            if (_matrix[current.Row - 1, current.Column] == nextStep && nextStep == 9)
+            {
+                if (!trailhead.EndPoints.Any(x => x.Row == current.Row - 1 && x.Column == current.Column))
+                {
+                    trailhead.EndPoints.Add(new Coordinate(current.Row - 1, current.Column));
+                }
+            }
+            else if (_matrix[current.Row - 1, current.Column] == nextStep)
+            {
+                CountTrailends(new Coordinate(current.Row - 1, current.Column), nextStep + 1, trailhead);
+            }
+        }
+
+        if (current.Row + 1 < _numberOfRows)
+        {
+            if (_matrix[current.Row + 1, current.Column] == nextStep && nextStep == 9)
+            {
+                if (!trailhead.EndPoints.Any(x => x.Row == current.Row + 1 && x.Column == current.Column))
+                {
+                    trailhead.EndPoints.Add(new Coordinate(current.Row + 1, current.Column));
+                }
+            }
+            else if (_matrix[current.Row + 1, current.Column] == nextStep)
+            {
+                CountTrailends(new Coordinate(current.Row + 1, current.Column), nextStep + 1, trailhead);
+            }
+        }
+
+        if (current.Column - 1 >= 0)
+        {
+            if (_matrix[current.Row, current.Column - 1] == nextStep && nextStep == 9)
+            {
+                if (!trailhead.EndPoints.Any(x => x.Row == current.Row && x.Column == current.Column - 1))
+                {
+                    trailhead.EndPoints.Add(new Coordinate(current.Row, current.Column - 1));
+                }
+            }
+            else if (_matrix[current.Row, current.Column - 1] == nextStep)
+            {
+                CountTrailends(new Coordinate(current.Row, current.Column - 1), nextStep + 1, trailhead);
+            }
+        }
+
+        if (current.Column + 1 < _numberOfColumns)
+        {
+            if (_matrix[current.Row, current.Column + 1] == nextStep && nextStep == 9)
+            {
+                if (!trailhead.EndPoints.Any(x => x.Row == current.Row && x.Column == current.Column + 1))
+                {
+                    trailhead.EndPoints.Add(new Coordinate(current.Row, current.Column + 1));
+                }
+            }
+            else if (_matrix[current.Row, current.Column + 1] == nextStep)
+            {
+                CountTrailends(new Coordinate(current.Row, current.Column + 1), nextStep + 1, trailhead);
+            }
+        }
     }
 
     private void CountTrailheads(Coordinate start, Coordinate current, int nextStep)
@@ -150,16 +220,16 @@ internal class Ten
         {
             AddTrailheadWithStart(start, current);
         }
-        else if (!trailhead.StartPoints.Any(x => x.Row == start.Row && x.Column == start.Column))
+        else if (!trailhead.EndPoints.Any(x => x.Row == start.Row && x.Column == start.Column))
         {
-            trailhead.StartPoints.Add(start);
+            trailhead.EndPoints.Add(start);
         }
     }
 
     private void AddTrailheadWithStart(Coordinate start, Coordinate current)
     {
         var trailhead = new Trailhead(current);
-        trailhead.StartPoints.Add(start);
+        trailhead.EndPoints.Add(start);
         _trailheads.Add(trailhead);
     }
 }
