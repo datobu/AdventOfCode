@@ -2,11 +2,11 @@
 
 internal class Eleven
 {
-    private readonly int _runCount = 9;
+    private readonly int _runCount = 75;
 
     public long Run()
     {
-        Dictionary<long, int> dict = [];
+        Dictionary<long, long> dict = [];
 
         dict.Add(5910927, 1);
         dict.Add(0, 1);
@@ -24,7 +24,7 @@ internal class Eleven
             dict = RunThroughDict(dict);
         }
 
-        int sum = 0;
+        long sum = 0;
 
         foreach (var i in dict)
         {
@@ -34,15 +34,17 @@ internal class Eleven
         return sum;
     }
 
-    private Dictionary<long, int> RunThroughDict(Dictionary<long, int> dict)
+    private Dictionary<long, long> RunThroughDict(Dictionary<long, long> dict)
     {
-        Dictionary<long, int> newDict = [];
+        Dictionary<long, long> newDict = [];
 
         foreach (var entry in dict)
         {
             if (entry.Key == 0)
             {
-                AddValueToDict(newDict, 1, entry.Value - 1);
+                long myOldCount = newDict.TryGetValue(1, out long value) ? value : 0;
+                myOldCount += entry.Value - 1;
+                AddValueToDict(newDict, 1, myOldCount);
             }
             else
             {
@@ -50,8 +52,8 @@ internal class Eleven
                 {
                     (long left, long right) = Split(entry.Key.ToString());
 
-                    int oldCount = dict[entry.Key] - 1;
-                    oldCount += newDict.TryGetValue(left, out int value) ? value : 0;
+                    long oldCount = dict[entry.Key] - 1;
+                    oldCount += newDict.TryGetValue(left, out long value) ? value : 0;
                     AddValueToDict(newDict, left, oldCount);
 
                     oldCount = dict[entry.Key] - 1;
@@ -68,7 +70,7 @@ internal class Eleven
         return newDict;
     }
 
-    private static void AddValueToDict(Dictionary<long, int> dict, long value, int oldCount)
+    private static void AddValueToDict(Dictionary<long, long> dict, long value, long oldCount)
     {
         if (!dict.ContainsKey(value))
         {
