@@ -6,44 +6,68 @@ internal class Eleven
     {
         return PartOne();
 
-        // PartTwo();
+        // return PartTwo();
     }
 
-    private int PartOne()
+    public int PartTwo()
+    {
+        var stones = DoStuff(75);
+        return stones.Count;
+    }
+
+    public int PartOne()
+    {
+        var stones = DoStuff(25);
+
+        Print(stones);
+
+        return stones.Count;
+    }
+
+    public void Print(List<long> stones)
+    {
+        foreach (var stone in stones)
+        {
+            Console.Write(stone.ToString() + " ");
+        }
+    }
+
+    private List<long> DoStuff(int runCount)
     {
         var input = File.ReadAllText("../../../Common/Inputs/DayEleven.txt");
 
         List<long> stones = input.Split(' ').Select(long.Parse).ToList();
 
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < runCount; i++)
         {
             List<long> stonesAfterBlink = [];
 
             foreach (long stone in stones)
             {
-                string textStone = stone.ToString();
-
                 if (stone == 0)
                 {
                     stonesAfterBlink.Add(1);
                 }
-                else if (textStone.Length % 2 == 0)
-                {
-                    (long newStoneLeft, long newStoneRight) = Split(textStone);
-                    stonesAfterBlink.Add(newStoneLeft);
-                    stonesAfterBlink.Add(newStoneRight);
-                }
                 else
                 {
-                    stonesAfterBlink.Add(stone * 2024);
+                    string textStone = stone.ToString();
+                    if (textStone.Length % 2 == 0)
+                    {
+                        (long newStoneLeft, long newStoneRight) = Split(textStone);
+                        stonesAfterBlink.Add(newStoneLeft);
+                        stonesAfterBlink.Add(newStoneRight);
+                    }
+                    else
+                    {
+                        stonesAfterBlink.Add(stone * 2024);
+                    }
                 }
             }
 
             stones = stonesAfterBlink;
         }
 
-        Console.WriteLine(stones.Count);
-        return 0;
+        return stones;
     }
 
     private (long NewStoneLeft, long NewStoneRight) Split(string textStone)
