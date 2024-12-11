@@ -8,7 +8,7 @@ internal class Program
     {
         _ = args;
 
-        var day = new TenPartTwo();
+        var day = new Eleven();
 
         long result = day.Run();
 
