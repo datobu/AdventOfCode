@@ -2,26 +2,24 @@
 
 internal class Eleven
 {
-    public int Run()
-    {
-        return PartOne();
+    private long _sum = 0;
 
-        // return PartTwo();
+    public long Run()
+    {
+        PartTwo();
+        return _sum;
     }
 
-    public int PartTwo()
+    public void PartTwo()
     {
-        var stones = DoStuff(75);
-        return stones.Count;
+        DoStuff(75);
     }
 
-    public int PartOne()
+    public void PartOne()
     {
-        var stones = DoStuff(25);
+        DoStuff(25);
 
-        Print(stones);
-
-        return stones.Count;
+        // Print(stones);
     }
 
     public void Print(List<long> stones)
@@ -32,42 +30,51 @@ internal class Eleven
         }
     }
 
-    private List<long> DoStuff(int runCount)
+    private void DoStuff(int runCount)
     {
         var input = File.ReadAllText("../../../Common/Inputs/DayEleven.txt");
 
         List<long> stones = input.Split(' ').Select(long.Parse).ToList();
 
-        for (int i = 0; i < runCount; i++)
+        foreach (var stone in stones)
         {
-            List<long> stonesAfterBlink = [];
-
-            foreach (long stone in stones)
+            var list = new List<long>
             {
-                if (stone == 0)
-                {
-                    stonesAfterBlink.Add(1);
-                }
-                else
-                {
-                    string textStone = stone.ToString();
-                    if (textStone.Length % 2 == 0)
-                    {
-                        (long newStoneLeft, long newStoneRight) = Split(textStone);
-                        stonesAfterBlink.Add(newStoneLeft);
-                        stonesAfterBlink.Add(newStoneRight);
-                    }
-                    else
-                    {
-                        stonesAfterBlink.Add(stone * 2024);
-                    }
-                }
-            }
+                stone
+            };
+            RunRecursive(list, runCount);
+        }
+    }
 
-            stones = stonesAfterBlink;
+    private void RunRecursive(List<long> stones, int count)
+    {
+        if (count == 0)
+        {
+            _sum += stones.Count;
+            return;
         }
 
-        return stones;
+        List<long> stonesAfterBlink = [];
+
+        foreach (var stone in stones)
+        {
+            if (stone == 0)
+            {
+                stonesAfterBlink.Add(1);
+            }
+            else if (stone.ToString().Length % 2 == 0)
+            {
+                (long newStoneLeft, long newStoneRight) = Split(stone.ToString());
+                stonesAfterBlink.Add(newStoneLeft);
+                stonesAfterBlink.Add(newStoneRight);
+            }
+            else
+            {
+                stonesAfterBlink.Add(stone * 2024);
+            }
+        }
+
+        RunRecursive(stonesAfterBlink, count - 1);
     }
 
     private (long NewStoneLeft, long NewStoneRight) Split(string textStone)
