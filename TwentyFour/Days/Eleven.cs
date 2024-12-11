@@ -6,7 +6,9 @@ internal class Eleven
 
     public long Run()
     {
-        PartTwo();
+        // RunRecursive(0, 9);
+
+        PartOne();
         return _sum;
     }
 
@@ -38,43 +40,60 @@ internal class Eleven
 
         foreach (var stone in stones)
         {
-            var list = new List<long>
-            {
-                stone
-            };
-            RunRecursive(list, runCount);
+            RunRecursive(stone, runCount);
         }
     }
 
-    private void RunRecursive(List<long> stones, int count)
+    private long RunRecursive(long stone, int count)
     {
         if (count == 0)
         {
-            _sum += stones.Count;
-            return;
+            return 1;
         }
 
         List<long> stonesAfterBlink = [];
 
-        foreach (var stone in stones)
+        if (stone == 0)
         {
-            if (stone == 0)
+            stonesAfterBlink.Add(1);
+        }
+        else if (stone.ToString().Length % 2 == 0)
+        {
+            (long newStoneLeft, long newStoneRight) = Split(stone.ToString());
+            stonesAfterBlink.Add(newStoneLeft);
+            stonesAfterBlink.Add(newStoneRight);
+        }
+        else
+        {
+            stonesAfterBlink.Add(stone * 2024);
+        }
+
+        Dictionary<long, long> stoneWithCount = [];
+
+        foreach (var newStone in stonesAfterBlink)
+        {
+            if (stoneWithCount.ContainsKey(newStone))
             {
-                stonesAfterBlink.Add(1);
-            }
-            else if (stone.ToString().Length % 2 == 0)
-            {
-                (long newStoneLeft, long newStoneRight) = Split(stone.ToString());
-                stonesAfterBlink.Add(newStoneLeft);
-                stonesAfterBlink.Add(newStoneRight);
+                stoneWithCount[newStone]++;
             }
             else
             {
-                stonesAfterBlink.Add(stone * 2024);
+                stoneWithCount.Add(newStone, 1);
             }
         }
 
-        RunRecursive(stonesAfterBlink, count - 1);
+        foreach (var keyValuePair in stoneWithCount)
+        {
+            long newValue = RunRecursive(keyValuePair.Key, count - 1);
+            /*if (newValue <= 0)
+            {
+                Console.WriteLine($"{newValue} / {_sum}");
+            }*/
+
+            _sum += keyValuePair.Value * newValue;
+        }
+
+        return 0;
     }
 
     private (long NewStoneLeft, long NewStoneRight) Split(string textStone)
