@@ -2,98 +2,80 @@
 
 internal class Eleven
 {
-    private long _sum = 0;
+    private readonly int _runCount = 4;
 
     public long Run()
     {
-        // RunRecursive(0, 9);
+        Dictionary<long, int> dict = [];
 
-        PartOne();
-        return _sum;
+        dict.Add(5910927, 1);
+        dict.Add(0, 1);
+        dict.Add(1, 1);
+        dict.Add(47, 1);
+        dict.Add(261223, 1);
+        dict.Add(94788, 1);
+        dict.Add(545, 1);
+        dict.Add(7771, 1);
+
+        // 5910927 0 1 47 261223 94788 545 7771
+
+        for (int i = 0; i < _runCount; i++)
+        {
+            dict = RunThroughDict(dict);
+        }
+
+        int sum = 0;
+
+        foreach (var i in dict)
+        {
+            sum += i.Value;
+        }
+
+        return sum;
     }
 
-    public void PartTwo()
+    private Dictionary<long, int> RunThroughDict(Dictionary<long, int> dict)
     {
-        DoStuff(75);
-    }
+        Dictionary<long, int> newDict = [];
 
-    public void PartOne()
-    {
-        DoStuff(25);
-
-        // Print(stones);
-    }
-
-    public void Print(List<long> stones)
-    {
-        foreach (var stone in stones)
+        foreach (var entry in dict)
         {
-            Console.Write(stone.ToString() + " ");
-        }
-    }
-
-    private void DoStuff(int runCount)
-    {
-        var input = File.ReadAllText("../../../Common/Inputs/DayEleven.txt");
-
-        List<long> stones = input.Split(' ').Select(long.Parse).ToList();
-
-        foreach (var stone in stones)
-        {
-            RunRecursive(stone, runCount);
-        }
-    }
-
-    private long RunRecursive(long stone, int count)
-    {
-        if (count == 0)
-        {
-            return 1;
-        }
-
-        List<long> stonesAfterBlink = [];
-
-        if (stone == 0)
-        {
-            stonesAfterBlink.Add(1);
-        }
-        else if (stone.ToString().Length % 2 == 0)
-        {
-            (long newStoneLeft, long newStoneRight) = Split(stone.ToString());
-            stonesAfterBlink.Add(newStoneLeft);
-            stonesAfterBlink.Add(newStoneRight);
-        }
-        else
-        {
-            stonesAfterBlink.Add(stone * 2024);
-        }
-
-        Dictionary<long, long> stoneWithCount = [];
-
-        foreach (var newStone in stonesAfterBlink)
-        {
-            if (stoneWithCount.ContainsKey(newStone))
+            if (entry.Key == 0)
             {
-                stoneWithCount[newStone]++;
+                AddValueToDict(newDict, 1, entry.Value - 1);
             }
             else
             {
-                stoneWithCount.Add(newStone, 1);
+                if (entry.Key.ToString().Length % 2 == 0)
+                {
+                    (long left, long right) = Split(entry.Key.ToString());
+
+                    int oldCount = dict[entry.Key] - 1;
+                    oldCount += newDict.TryGetValue(left, out int value) ? value : 0;
+                    AddValueToDict(newDict, left, oldCount);
+
+                    oldCount = dict[entry.Key] - 1;
+                    oldCount += newDict.TryGetValue(right, out value) ? value : 0;
+                    AddValueToDict(newDict, right, oldCount);
+                }
+                else
+                {
+                    AddValueToDict(newDict, entry.Key * 2024, entry.Value - 1);
+                }
             }
         }
 
-        foreach (var keyValuePair in stoneWithCount)
-        {
-            long newValue = RunRecursive(keyValuePair.Key, count - 1);
-            /*if (newValue <= 0)
-            {
-                Console.WriteLine($"{newValue} / {_sum}");
-            }*/
+        return newDict;
+    }
 
-            _sum += keyValuePair.Value * newValue;
+    private static void AddValueToDict(Dictionary<long, int> dict, long value, int oldCount)
+    {
+        if (!dict.ContainsKey(value))
+        {
+            dict.Add(value, 0);
         }
 
-        return 0;
+        dict[value] = oldCount + 1;
     }
 
     private (long NewStoneLeft, long NewStoneRight) Split(string textStone)
