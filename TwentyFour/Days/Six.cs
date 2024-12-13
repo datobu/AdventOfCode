@@ -27,7 +27,21 @@ internal class Six
 
         (int row, int col) = GetStartingPosition();
 
+        return PartTwo(row, col);
+    }
+
+    public int PartOne(int row, int col)
+    {
         WalkThrough(row, col, Direction.Up);
+
+        PrintMatrix(_wayMatrix);
+
+        return GetXCount();
+    }
+
+    public int PartTwo(int row, int col)
+    {
+        PlaceObstacles(row, col, Direction.Up);
 
         PrintMatrix(_wayMatrix);
 
@@ -45,6 +59,8 @@ internal class Six
 
             Console.WriteLine();
         }
+
+        Console.WriteLine();
     }
 
     private void WalkThrough(int row, int col, Direction direction)
@@ -129,7 +145,7 @@ internal class Six
 
     private string[] InitMatrix()
     {
-        string[] rows = File.ReadAllLines("../../../Common/Inputs/DaySix.txt");
+        string[] rows = File.ReadAllLines("../../../Common/Inputs/DaySix-Example.txt");
 
         _numberOfRows = rows.Length;
         _numberOfColumns = rows[0].Length;
@@ -155,6 +171,63 @@ internal class Six
             }
 
             rowNumber++;
+        }
+    }
+
+    private void PlaceObstacles(int row, int col, Direction direction)
+    {
+        int original_row = row;
+        int original_col = col;
+
+        PrintMatrix(_wayMatrix);
+
+        switch (direction)
+        {
+            case Direction.Left:
+                col--;
+                break;
+            case Direction.Right:
+                col++;
+                break;
+            case Direction.Up:
+                row--;
+                break;
+            case Direction.Down:
+                row++;
+                break;
+        }
+
+        if (row < 0 || col < 0 || row == _numberOfRows || col == _numberOfColumns)
+        {
+            return;
+        }
+
+        if (_wayMatrix[original_row, original_col] == 'X')
+        {
+            _wayMatrix[row, col] = 'O';
+        }
+
+        if (_matrix[row, col] == '#')
+        {
+            Direction nextDirection = direction switch
+            {
+                Direction.Up => Direction.Right,
+                Direction.Right => Direction.Down,
+                Direction.Down => Direction.Left,
+                Direction.Left => Direction.Up,
+                _ => throw new Exception()
+            };
+
+            PlaceObstacles(original_row, original_col, nextDirection);
+        }
+        else
+        {
+            if (_wayMatrix[original_row, original_col] != 'O')
+            {
+                _wayMatrix[original_row, original_col] = 'X';
+            }
+
+            PlaceObstacles(row, col, direction);
         }
     }
 }
