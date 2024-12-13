@@ -10,8 +10,8 @@ internal class Program
 
         // var day = new Twelve();
 
-        long result = ThirteenTwo.Run();
+        // long result = ThirteenTwo.Run();
 
-        Console.WriteLine(result);
+        Console.WriteLine(ThirteenTwo.Run());
     }
 }

@@ -2,7 +2,7 @@
 
 internal class ThirteenTwo
 {
-    private const long _part2 = 0;
+    private const long _part2 = 10000000000000;
 
     // private const long _part2 = 100000000000000;
 
@@ -31,74 +31,24 @@ internal class ThirteenTwo
 
         long sum = 0;
 
-        int count = 0;
         foreach (var matrix in games)
         {
-            count++;
+            var goalX = (double)matrix[0, 2];
+            var goalY = (double)matrix[1, 2];
+            var buttonAX = (double)matrix[0, 0];
+            var buttonAY = (double)matrix[1, 0];
+            var buttonBX = (double)matrix[0, 1];
+            var buttonBY = (double)matrix[1, 1];
 
-            // Multiply the first equation by the coefficient of y in the second equation (to eliminate y)
-            // and multiply the second equation by the coefficient of y in the first equation.
-            long factor1 = matrix[1, 1];  // Coefficient of y in the second equation
-            long factor2 = matrix[0, 1];  // Coefficient of y in the first equation
+            long b = (long)Math.Round((goalY - ((goalX / buttonAX) * buttonAY)) / (buttonBY - ((buttonBX / buttonAX) * buttonAY)));
+            long a = (long)Math.Round((goalX - (b * buttonBX)) / buttonAX);
 
-            // Create new equations after multiplication
-            long newA1 = matrix[0, 0] * factor1;  // New coefficient for x in the first equation
-            long newC1 = matrix[0, 2] * factor1;  // New constant term in the first equation
+            var actualX = (a * buttonAX) + (b * buttonBX);
+            var actualY = (a * buttonAY) + (b * buttonBY);
 
-            long newA2 = matrix[1, 0] * factor2;  // New coefficient for x in the second equation
-            long newC2 = matrix[1, 2] * factor2;  // New constant term in the second equation
-
-            // Now subtract the equations to eliminate y
-            long denominator = newA2 - newA1;
-            if (denominator == 0)
+            if (actualX == goalX && actualY == goalY && a >= 0 && b >= 0)
             {
-                // Infinite solutions: choose x = 0 or y = 0 and solve for the other variable
-                Console.WriteLine("Infinite solutions. Providing one where x or y is close to 0.");
-
-                // Try x = 0
-                long y1 = matrix[0, 2] / matrix[0, 1];  // Solve for y when x = 0
-
-                // Alternatively, try y = 0
-                long x1 = matrix[1, 2] / matrix[1, 0];  // Solve for x when y = 0
-
-                if ((x1 <= 100 && y1 <= 100) || _part2 > 0)
-                {
-                    sum += (x1 * 3) + y1;
-                    Console.WriteLine($"SolutionA / {sum}: A = {x1}, B = {y1}");
-                }
-
-                continue;
-            }
-
-            long a = (newC2 - newC1) / denominator;
-
-            // Solve for y using the value of x in one of the original equations
-            long b = (matrix[0, 2] - (matrix[0, 0] * a)) / matrix[0, 1];
-
-            // Check if x and y are both non-negative
-            if (a < 0 || b < 0)
-            {
-                Console.WriteLine($"No Solution: I No valid solution where x >= 0 and y >= 0.");
-            }
-            else
-            {
-                var xResult = (a * matrix[0, 0]) + (b * matrix[0, 1]);
-                var xShall = matrix[0, 2];
-
-                bool xIsCorrect = matrix[0, 2] == xResult;
-
-                // bool xIsCorrect = true;
-
-                // Output the valid solution
-                if (((a <= 100 && b <= 100) || _part2 > 0) && xIsCorrect)
-                {
-                    sum += (a * 3) + b;
-                    Console.WriteLine($"SolutionB / {sum}: a = {a}, b = {b}");
-                }
-                else
-                {
-                    Console.WriteLine($"No Solution II: ");
-                }
+                sum += (a * 3) + b;
             }
         }
 
