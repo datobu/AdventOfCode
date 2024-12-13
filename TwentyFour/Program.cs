@@ -8,10 +8,8 @@ internal class Program
     {
         _ = args;
 
-        // var day = new Twelve();
+        var day = new Eight();
 
-        // long result = ThirteenTwo.Run();
-
-        Console.WriteLine(ThirteenTwo.Run());
+        Console.WriteLine(day.Run());
     }
 }
