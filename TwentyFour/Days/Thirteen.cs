@@ -1,16 +1,16 @@
 ﻿namespace TwentyFour.Days;
 
-internal class Twelve
+internal class Thirteen
 {
     private class Game(int aXValue, int aYValue, int bXValue, int bYValue, int xWin, int yWin)
     {
+        public int AButtonPushCount { get; set; } = 0;
+
+        public int BButtonPushCount { get; set; } = 0;
+
         public bool IsSolved { get; private set; } = false;
 
         public long CurrentCost { get; set; } = 0;
-
-        private int AButtonPushCount { get; set; } = 0;
-
-        private int BButtonPushCount { get; set; } = 0;
 
         private int XStart { get; set; } = 0;
 
@@ -161,18 +161,18 @@ internal class Twelve
             }
         }
 
-        var solvedGames = games.Where(x => x.IsSolved);
-
-        var testSum = solvedGames.Sum(x => x.CurrentCost);
+        int count = 1;
+        foreach (var game in games)
+        {
+            Console.WriteLine($"{count++} - Solution: a = {game.AButtonPushCount}, b = {game.BButtonPushCount}");
+        }
 
         return sum;
-
-        // 29147 is wrong... WTF?
     }
 
     private static List<Game> CreateGames()
     {
-        var lines = File.ReadAllLines("../../../Common/Inputs/DayTwelve.txt");
+        var lines = File.ReadAllLines("../../../Common/Inputs/DayThirteen.txt");
 
         int lineNumber = 0;
         int ax = 0;

@@ -10,7 +10,7 @@ internal class Program
 
         // var day = new Twelve();
 
-        long result = Twelve.Run();
+        long result = ThirteenTwo.Run();
 
         Console.WriteLine(result);
     }
