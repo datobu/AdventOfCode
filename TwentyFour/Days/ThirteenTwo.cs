@@ -2,7 +2,9 @@
 
 internal class ThirteenTwo
 {
-    private const int _part2 = 0;
+    private const long _part2 = 0;
+
+    // private const long _part2 = 100000000000000;
 
     // int part2 = 10000000000000;
 
@@ -28,38 +30,75 @@ internal class ThirteenTwo
         var games = CreateGames();
 
         long sum = 0;
-        int count = 1;
+
+        int count = 0;
         foreach (var matrix in games)
         {
-            long factor1 = matrix[1, 1];
-            long factor2 = matrix[0, 1];
+            count++;
 
-            long newA1 = matrix[0, 0] * factor1;
-            long newC1 = matrix[0, 2] * factor1;
+            // Multiply the first equation by the coefficient of y in the second equation (to eliminate y)
+            // and multiply the second equation by the coefficient of y in the first equation.
+            long factor1 = matrix[1, 1];  // Coefficient of y in the second equation
+            long factor2 = matrix[0, 1];  // Coefficient of y in the first equation
 
-            long newA2 = matrix[1, 0] * factor2;
-            long newC2 = matrix[1, 2] * factor2;
+            // Create new equations after multiplication
+            long newA1 = matrix[0, 0] * factor1;  // New coefficient for x in the first equation
+            long newC1 = matrix[0, 2] * factor1;  // New constant term in the first equation
 
-            long buttonA = (newC2 - newC1) / (newA2 - newA1);
+            long newA2 = matrix[1, 0] * factor2;  // New coefficient for x in the second equation
+            long newC2 = matrix[1, 2] * factor2;  // New constant term in the second equation
 
-            long buttonB = (matrix[0, 2] - (matrix[0, 0] * buttonA)) / matrix[0, 1];
-
-            // Output the solution
-            if (buttonA >= 0 && buttonB >= 0)
+            // Now subtract the equations to eliminate y
+            long denominator = newA2 - newA1;
+            if (denominator == 0)
             {
-                if (_part2 > 0 || (buttonA <= 100 && buttonB <= 100))
+                // Infinite solutions: choose x = 0 or y = 0 and solve for the other variable
+                Console.WriteLine("Infinite solutions. Providing one where x or y is close to 0.");
+
+                // Try x = 0
+                long y1 = matrix[0, 2] / matrix[0, 1];  // Solve for y when x = 0
+
+                // Alternatively, try y = 0
+                long x1 = matrix[1, 2] / matrix[1, 0];  // Solve for x when y = 0
+
+                if ((x1 <= 100 && y1 <= 100) || _part2 > 0)
                 {
-                    Console.WriteLine($"{count++} - Solution: a = {buttonA}, b = {buttonB}");
-                    sum += (buttonA * 3) + buttonB;
+                    sum += (x1 * 3) + y1;
+                    Console.WriteLine($"SolutionA / {sum}: A = {x1}, B = {y1}");
                 }
-                else
-                {
-                    Console.WriteLine($"{count++} - no solution for this problem");
-                }
+
+                continue;
+            }
+
+            long a = (newC2 - newC1) / denominator;
+
+            // Solve for y using the value of x in one of the original equations
+            long b = (matrix[0, 2] - (matrix[0, 0] * a)) / matrix[0, 1];
+
+            // Check if x and y are both non-negative
+            if (a < 0 || b < 0)
+            {
+                Console.WriteLine($"No Solution: I No valid solution where x >= 0 and y >= 0.");
             }
             else
             {
-                Console.WriteLine($"{count++} - no solution for this problem");
+                var xResult = (a * matrix[0, 0]) + (b * matrix[0, 1]);
+                var xShall = matrix[0, 2];
+
+                bool xIsCorrect = matrix[0, 2] == xResult;
+
+                // bool xIsCorrect = true;
+
+                // Output the valid solution
+                if (((a <= 100 && b <= 100) || _part2 > 0) && xIsCorrect)
+                {
+                    sum += (a * 3) + b;
+                    Console.WriteLine($"SolutionB / {sum}: a = {a}, b = {b}");
+                }
+                else
+                {
+                    Console.WriteLine($"No Solution II: ");
+                }
             }
         }
 
@@ -103,9 +142,9 @@ internal class ThirteenTwo
                     c1 = long.Parse(xValue);
                     c2 = long.Parse(yValue);
 
-                    Console.WriteLine($"{a1} {a2} {c1 + _part2}");
+                    /*Console.WriteLine($"{a1} {a2} {c1 + _part2}");
                     Console.WriteLine($"{b1} {b2} {c2 + _part2}");
-                    Console.WriteLine();
+                    Console.WriteLine();*/
 
                     long[,] a = new long[2, 3]
                     {

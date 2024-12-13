@@ -162,9 +162,18 @@ internal class Thirteen
         }
 
         int count = 1;
+        long mySum = 0;
         foreach (var game in games)
         {
-            Console.WriteLine($"{count++} - Solution: a = {game.AButtonPushCount}, b = {game.BButtonPushCount}");
+            if (game.IsSolved)
+            {
+                mySum += game.CurrentCost;
+                Console.WriteLine($"{count++} - Solution / {mySum}: a = {game.AButtonPushCount}, b = {game.BButtonPushCount}");
+            }
+            else
+            {
+                Console.WriteLine($"{count++} - No Solution: a = {game.AButtonPushCount}, b = {game.BButtonPushCount}");
+            }
         }
 
         return sum;
