@@ -235,7 +235,7 @@ internal class Thirteen
         int xIndex = line.IndexOf(xSeperator) + 2;
         int yIndex = line.IndexOf(ySeperator) + 2;
 
-        xValue = line.Substring(xIndex, line.IndexOf(",", xIndex) - xIndex);
-        yValue = line.Substring(yIndex);
+        xValue = line[xIndex..line.IndexOf(',', xIndex)];
+        yValue = line[yIndex..];
     }
 }
