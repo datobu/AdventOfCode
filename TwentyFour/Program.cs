@@ -9,7 +9,8 @@ internal class Program
         _ = args;
 
         // var day = new Forteen();
+        ForteenTwo.PartTwo();
 
-        Console.WriteLine(Forteen.PartOne());
+        Console.WriteLine();
     }
 }
