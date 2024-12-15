@@ -116,7 +116,7 @@ public class ForteenTwo
 
             if (yEnd < 0)
             {
-                yEnd = yEnd + GameParameter.Height;
+                yEnd += GameParameter.Height;
             }
 
             return yEnd;
