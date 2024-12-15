@@ -43,19 +43,14 @@ public class Fifteen
 
     private (int Y, int X) MakeStep(char stepChar, int y, int x)
     {
-        switch (stepChar)
+        return stepChar switch
         {
-            case '>':
-                return Move(stepChar, y, x, 0, +1);
-            case '<':
-                return Move(stepChar, y, x, 0, -1);
-            case '^':
-                return Move(stepChar, y, x, -1, 0);
-            case 'v':
-                return Move(stepChar, y, x, +1, 0);
-            default:
-                throw new Exception();
-        }
+            '>' => Move(stepChar, y, x, 0, +1),
+            '<' => Move(stepChar, y, x, 0, -1),
+            '^' => Move(stepChar, y, x, -1, 0),
+            'v' => Move(stepChar, y, x, +1, 0),
+            _ => throw new Exception(),
+        };
     }
 
     private (int Y, int X) Move(char stepChar, int y, int x, int yStep, int xStep)
