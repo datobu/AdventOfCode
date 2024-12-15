@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// idea stolen from google / reddit
 internal class Eleven
 {
     private readonly int _runCount = 75;
@@ -34,7 +35,7 @@ internal class Eleven
         return sum;
     }
 
-    private Dictionary<long, long> RunThroughDict(Dictionary<long, long> dict)
+    private static Dictionary<long, long> RunThroughDict(Dictionary<long, long> dict)
     {
         Dictionary<long, long> newDict = [];
 
@@ -80,7 +81,7 @@ internal class Eleven
         dict[value] = oldCount + 1;
     }
 
-    private (long NewStoneLeft, long NewStoneRight) Split(string textStone)
+    private static (long NewStoneLeft, long NewStoneRight) Split(string textStone)
     {
         int halfLength = textStone.Length / 2;
 

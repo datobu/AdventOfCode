@@ -1,7 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
 // stark inspiriert bei https://github.com/MartinZikmund/advent-of-code/blob/main/src/AdventOfCode.Puzzles/2024/06/Part2/AoC2024Day6Part2.cs
-
 internal class SixTwo
 {
     private int _width;

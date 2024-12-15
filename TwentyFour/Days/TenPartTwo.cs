@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal class TenPartTwo
 {
     private readonly List<Trailhead> _trailheads = [];

@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal class Five
 {
     private readonly List<Tuple<int, int>> _rules = [];
@@ -14,9 +15,7 @@ internal class Five
         // return PartOne();
     }
 
-#pragma warning disable IDE0051 // Remove unused private members
-    private int PartOne()
-#pragma warning restore IDE0051 // Remove unused private members
+    public int PartOne()
     {
         int sum = 0;
 
@@ -31,7 +30,7 @@ internal class Five
         return sum;
     }
 
-    private int PartTwo()
+    public int PartTwo()
     {
         int sum = 0;
 

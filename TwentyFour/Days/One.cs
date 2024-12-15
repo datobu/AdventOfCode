@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal static class One
 {
     public static void PartOne()

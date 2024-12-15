@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// idea stolen by google / reddit / implemented with the use of chatgpt
 internal class ThirteenTwo
 {
     private const long _part2 = 10000000000000;
@@ -117,9 +118,6 @@ internal class ThirteenTwo
         long b1 = 0;
         long a2 = 0;
         long b2 = 0;
-        long c1 = 0;
-        long c2 = 0;
-
         List<long[,]> arrays = [];
 
         foreach (var line in lines)
@@ -142,8 +140,8 @@ internal class ThirteenTwo
                 case 2:
                     GetValues(line, "X=", "Y=", out xValue, out yValue);
 
-                    c1 = long.Parse(xValue);
-                    c2 = long.Parse(yValue);
+                    long c1 = long.Parse(xValue);
+                    long c2 = long.Parse(yValue);
 
                     /*Console.WriteLine($"{a1} {a2} {c1 + _part2}");
                     Console.WriteLine($"{b1} {b2} {c2 + _part2}");
@@ -174,7 +172,7 @@ internal class ThirteenTwo
         int xIndex = line.IndexOf(xSeperator) + 2;
         int yIndex = line.IndexOf(ySeperator) + 2;
 
-        xValue = line.Substring(xIndex, line.IndexOf(",", xIndex) - xIndex);
-        yValue = line.Substring(yIndex);
+        xValue = line[xIndex..line.IndexOf(',', xIndex)];
+        yValue = line[yIndex..];
     }
 }

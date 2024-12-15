@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal class Four
 {
     public enum HorizontalDirection
@@ -19,7 +20,7 @@ internal class Four
     private char[,] _matrix = null!;
     private int _counter = 0;
 
-    internal int Run()
+    public int Run()
     {
         string[] lines = InitMatrix();
 
@@ -28,20 +29,7 @@ internal class Four
         return PartTwo();
     }
 
-    private string[] InitMatrix()
-    {
-        string[] lines = File.ReadAllLines("../../../Common/Inputs/DayFour.txt");
-
-        _numberOfLines = lines.Length;
-        _numberOfColumns = lines[0].Length;
-
-        _matrix = new char[_numberOfLines, _numberOfColumns];
-        return lines;
-    }
-
-#pragma warning disable IDE0051 // Remove unused private members
-    private int PartOne()
-#pragma warning restore IDE0051 // Remove unused private members
+    public int PartOne()
     {
         for (int line = 0; line < _numberOfLines; line++)
         {
@@ -86,6 +74,17 @@ internal class Four
         }
 
         return _counter;
+    }
+
+    private string[] InitMatrix()
+    {
+        string[] lines = File.ReadAllLines("../../../Common/Inputs/DayFour.txt");
+
+        _numberOfLines = lines.Length;
+        _numberOfColumns = lines[0].Length;
+
+        _matrix = new char[_numberOfLines, _numberOfColumns];
+        return lines;
     }
 
     private int PartTwo()

@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone Part One
 internal class Thirteen
 {
     private class Game(int aXValue, int aYValue, int bXValue, int bYValue, int xWin, int yWin)

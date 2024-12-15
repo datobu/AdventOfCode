@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone part one
 public class Forteen
 {
     public static class GameParameter

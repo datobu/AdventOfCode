@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// solved completely alone
 public class FifteenTwo
 {
     public static class GameParameter

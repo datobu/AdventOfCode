@@ -27,21 +27,12 @@ internal class Six
 
         (int row, int col) = GetStartingPosition();
 
-        return PartTwo(row, col);
+        return PartOne(row, col);
     }
 
     public int PartOne(int row, int col)
     {
         WalkThrough(row, col, Direction.Up);
-
-        PrintMatrix(_wayMatrix);
-
-        return GetXCount();
-    }
-
-    public int PartTwo(int row, int col)
-    {
-        PlaceObstacles(row, col, Direction.Up);
 
         PrintMatrix(_wayMatrix);
 

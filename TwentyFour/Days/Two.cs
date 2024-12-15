@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal static class Two
 {
     public static void Run()
@@ -8,9 +9,7 @@ internal static class Two
         PartTwo();
     }
 
-#pragma warning disable IDE0051 // Remove unused private members
-    private static void PartOne()
-#pragma warning restore IDE0051 // Remove unused private members
+    public static void PartOne()
     {
         var input = File.ReadAllLines("../../../Common/Inputs/DayTwo.txt");
 

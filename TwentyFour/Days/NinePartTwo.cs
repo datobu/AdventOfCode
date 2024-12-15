@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal class NinePartTwo
 {
     private readonly List<Tuple<int, string, bool>> _memory = [];

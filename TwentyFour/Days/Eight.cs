@@ -1,5 +1,6 @@
 ﻿namespace TwentyFour.Days;
 
+// completely alone
 internal class Eight
 {
     private int _numberOfRows = 0;
@@ -142,8 +143,8 @@ internal class Eight
                 {
                     PlaceAntiNodeIfValid(antiNodeRow, antiNodeCol);
 
-                    antiNodeRow = antiNodeRow - rowDistance;
-                    antiNodeCol = antiNodeCol - colDistance;
+                    antiNodeRow -= rowDistance;
+                    antiNodeCol -= colDistance;
                 }
 
                 antiNodeRow = cursorTwo.Item1 + rowDistance;
@@ -153,8 +154,8 @@ internal class Eight
                 {
                     PlaceAntiNodeIfValid(antiNodeRow, antiNodeCol);
 
-                    antiNodeRow = antiNodeRow + rowDistance;
-                    antiNodeCol = antiNodeCol + colDistance;
+                    antiNodeRow += rowDistance;
+                    antiNodeCol += colDistance;
                 }
             }
         }

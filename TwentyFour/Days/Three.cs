@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace TwentyFour.Days;
+
+// idea from gilles for part 2
 internal static class Three
 {
     public static void Run()
