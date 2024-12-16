@@ -1,18 +1,19 @@
 ﻿namespace TwentyFour.Days;
 
+// I was stuck so I asked chat gpt...
 public class Sixteen
 {
-    public enum Direction
+    private static readonly (int, int)[] Directions =
     {
-        North,
-        South,
-        West,
-        East
-    }
+        (0, 1), // Right
+        (1, 0), // Down
+        (0, -1), // Left
+        (-1, 0) // Up
+    };
 
     public static class GameParameter
     {
-        public const string Path = "../../../Common/Inputs/DaySixteen-Example.txt";
+        public const string Path = "../../../Common/Inputs/DaySixteen.txt";
     }
 
     private int _width;
@@ -23,117 +24,93 @@ public class Sixteen
     {
         Init();
 
-        (int y, int x) = GetStartingPosition();
-
-        int score = GetCheapestPathScore(y, x, Direction.East, 0, new List<Tuple<int, int>>());
+        int score = SolveMaze(_map);
 
         return score;
     }
 
-    private int GetCheapestPathScore(int y, int x, Direction direction, int score, List<Tuple<int, int>> pathCoordinates)
+    public int SolveMaze(char[,] maze)
     {
-        if (pathCoordinates.Any(c => c.Item1 == y && c.Item2 == x))
+        _height = maze.GetLength(0);
+        _width = maze.GetLength(1);
+        (int, int) start = (-1, -1), end = (-1, -1);
+
+        // Locate start (S) and end (E) points
+        for (int r = 0; r < _height; r++)
         {
-            return -1;
-        }
-
-        pathCoordinates.Add(Tuple.Create(y, x));
-
-        switch (direction)
-        {
-            case Direction.North:
-                int scoreNorth = ContinuePath(y - 1, x, score, _map[y - 1, x], Direction.North, 1, pathCoordinates);
-
-                int scoreWest = ContinuePath(y, x - 1, score, _map[y, x - 1], Direction.West, 1001, pathCoordinates);
-
-                int scoreEast = ContinuePath(y, x + 1, score, _map[y, x + 1], Direction.East, 1001, pathCoordinates);
-
-                return LowestSore(scoreNorth, scoreWest, scoreEast);
-
-            case Direction.South:
-                int scoreSouth = ContinuePath(y + 1, x, score, _map[y + 1, x], Direction.South, 1, pathCoordinates);
-
-                scoreWest = ContinuePath(y, x - 1, score, _map[y, x - 1], Direction.West, 1001, pathCoordinates);
-
-                scoreEast = ContinuePath(y, x + 1, score, _map[y, x + 1], Direction.East, 1001, pathCoordinates);
-
-                return LowestSore(scoreSouth, scoreWest, scoreEast);
-
-            case Direction.West:
-                scoreWest = ContinuePath(y, x - 1, score, _map[y, x - 1], Direction.West, 1, pathCoordinates);
-
-                scoreNorth = ContinuePath(y - 1, x, score, _map[y - 1, x], Direction.North, 1001, pathCoordinates);
-
-                scoreSouth = ContinuePath(y + 1, x, score, _map[y + 1, x], Direction.South, 1001, pathCoordinates);
-
-                return LowestSore(scoreSouth, scoreWest, scoreNorth);
-
-            case Direction.East:
-                scoreEast = ContinuePath(y, x + 1, score, _map[y, x + 1], Direction.East, 1, pathCoordinates);
-
-                scoreNorth = ContinuePath(y - 1, x, score, _map[y - 1, x], Direction.North, 1001, pathCoordinates);
-
-                scoreSouth = ContinuePath(y + 1, x, score, _map[y + 1, x], Direction.South, 1001, pathCoordinates);
-
-                return LowestSore(scoreSouth, scoreEast, scoreNorth);
-
-            default:
-                throw new Exception();
-        }
-    }
-
-    private int ContinuePath(int nextY, int nextX, int score, char directionValue, Direction direction, int scorePoints, List<Tuple<int, int>> pathCoordinates)
-    {
-        if (directionValue == 'S')
-        {
-            pathCoordinates.Clear();
-            return -1;
-        }
-        else if (directionValue == 'E')
-        {
-            pathCoordinates.Clear();
-            return score + scorePoints;
-        }
-        else if (directionValue == '#')
-        {
-            return -1;
-        }
-        else if (directionValue == '.')
-        {
-            return GetCheapestPathScore(nextY, nextX, direction, score + scorePoints, pathCoordinates);
-        }
-
-        throw new Exception();
-    }
-
-    private static int LowestSore(int scoreNorth, int scoreWest, int scoreEast)
-    {
-        List<int> scores = new List<int>() { scoreEast, scoreNorth, scoreWest };
-
-        var possibleScores = scores.Where(num => num != -1).ToList();
-
-        if (!possibleScores.Any())
-        {
-            return -1;
-        }
-
-        return possibleScores.Min();
-    }
-
-    private (int YStart, int XStart) GetStartingPosition()
-    {
-        for (int y = 0; y < _height; y++)
-        {
-            for (int x = 0; x < _width; x++)
+            for (int c = 0; c < _width; c++)
             {
-                if (_map[y, x] == 'S')
+                if (maze[r, c] == 'S')
                 {
-                    return (y, x);
+                    start = (r, c);
+                }
+
+                if (maze[r, c] == 'E')
+                {
+                    end = (r, c);
                 }
             }
         }
 
-        throw new Exception();
+        if (start == (-1, -1) || end == (-1, -1))
+        {
+            throw new ArgumentException("Maze must contain start 'S' and end 'E'.");
+        }
+
+        var queue = new Queue<(int Row, int Col, int Dir, int Steps, int Score)>();
+        var visited = new HashSet<(int, int, int)>();
+
+        // Initialize BFS with all possible starting directions
+        for (int i = 0; i < Directions.Length; i++)
+        {
+            var newRow = start.Item1 + Directions[i].Item1;
+            var newCol = start.Item2 + Directions[i].Item2;
+
+            if (maze[newRow, newCol] == '.')
+            {
+                if (i == 0)
+                {
+                    queue.Enqueue((newRow, newCol, i, 1, 1));
+                }
+                else
+                {
+                    queue.Enqueue((newRow, newCol, i, 1, 1001));
+                }
+
+                visited.Add((newRow, newCol, i));
+            }
+        }
+
+        int minScore = int.MaxValue;
+
+        while (queue.Count > 0)
+        {
+            var (row, col, dir, steps, score) = queue.Dequeue();
+
+            if ((row, col) == end)
+            {
+                minScore = Math.Min(minScore, score);
+                continue;
+            }
+
+            for (int i = 0; i < Directions.Length; i++)
+            {
+                var newRow = row + Directions[i].Item1;
+                var newCol = col + Directions[i].Item2;
+                int newScore = score + 1 + (i == dir ? 0 : 1000);
+
+                if (maze[newRow, newCol] == '.' || maze[newRow, newCol] == 'E')
+                {
+                    if (!visited.Contains((newRow, newCol, i)))
+                    {
+                        queue.Enqueue((newRow, newCol, i, steps + 1, newScore));
+                        visited.Add((newRow, newCol, i));
+                    }
+                }
+            }
+        }
+
+        return minScore;
     }
 
     private void Init()
@@ -161,7 +138,7 @@ public class Sixteen
         }
     }
 
-    private void PrintMap(char[,] map)
+    /* private void PrintMap(char[,] map)
     {
         for (int i = 0; i < _height; i++)
         {
@@ -174,5 +151,5 @@ public class Sixteen
         }
 
         Console.WriteLine();
-    }
+    }*/
 }
