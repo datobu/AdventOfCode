@@ -8,8 +8,8 @@ internal class Program
     {
         _ = args;
 
-        var day = new FifteenTwo();
+        var day = new Sixteen();
 
-        Console.WriteLine(day.PartTwo());
+        Console.WriteLine(day.PartOne());
     }
 }
